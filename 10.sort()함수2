@@ -1,0 +1,85 @@
+10.sort()함수2
+
+Class를 정의해서 여러개의 변수가 존재하는 상황에서, 특정한 변수를 기준으로 정렬하는 방법에 대해 알아봤다.
+학생의 성적순으로 학생의 이름을 나열하는 방법.
+
+클래스를 정의하는 방식은, 실제 개발에서도 효율적으로 사용할 수 있다.
+프로그래밍 속도에서는 별로 유용하지는 않다.
+클래스를 이용하는 방식은 실무에 유용하고,
+대회에서는 Pair 라이브러리를 사용하는 것이 유용하다.
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main(void) {
+	
+	vector < pair < int, string > > v;
+	//pair는 쌍을 의미. int와 string이 쌍을 이룬다는 의미.
+	v.push_back(pair<int, string>(90, "박한울")); 
+	v.push_back(pair<int, string>(85, "이태일")); 
+	v.push_back(pair<int, string>(82, "나동빈")); 
+	v.push_back(pair<int, string>(98, "강종구"));
+	v.push_back(pair<int, string>(79, "이상욱"));  
+
+
+  sort(v.begin(), v.end());
+  
+	for(int i=0 ; i < v.size(); i++){
+		
+		cout << v[i].second << ' '; // second은 pair안에 두번쨰 인자를 의미.
+		 
+		
+	}
+	
+	return 0; 
+}
+실행결과 : 이상욱 나동빈 이태일 박한울 강종구
+vector와 pair 라이브러리를 사용해서, 굳이 클래스를 정의하지 않고도 빠르게 정렬하는 방법이다.
+--------------------------------------------------------
+
+작성한 소스코드의 시간복잡도가 동일하다면, 프로그래밍 대회에서는 소스코드가 짧을 수록 남들보다 앞설 수 있다.
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+bool compare(pair < string, pair<int, int> >a, pair < string, pair<int, int> >b){
+	if(a.second.first == b.second.first) {
+		return a.second.second > b.second.second;
+		//점수가 같다면 더 생일이 느린 학생이 출력이 됨.
+		// pair를 두개를 겹쳐서 쓰면, 기준을 더 세분화 할 수 있다.
+		// 비교기준이 3개가 넘어가게 되면,pair가 더 복잡할 수 있다. 이 경우에는 클래스를 만드는게.. 
+	} else {
+		return a.second.first > b.second.first;
+	}
+}
+
+int main(void) {
+	
+	vector < pair < string, pair<int, int>  > > v;
+	//pair는 쌍을 의미. int와 string이 쌍을 이룬다는 의미.
+	v.push_back(pair<string, pair<int, int>>("박한울", pair<int, int>(90,19961212))); 
+	v.push_back(pair<string, pair<int, int>>("이태일", pair<int, int>(97,19931212))); 
+	v.push_back(pair<string, pair<int, int>>("나동빈", pair<int, int>(95,19951212))); 
+	v.push_back(pair<string, pair<int, int>>("강종구", pair<int, int>(90,19921212)));
+	v.push_back(pair<string, pair<int, int>>("이상욱", pair<int, int>(88,19901212)));  
+
+	sort(v.begin(), v.end(), compare);
+
+	for(int i=0 ; i < v.size(); i++){
+		
+		cout << v[i].second << ' '; // second은 pair안에 두번쨰 인자를 의미.
+		 
+		
+	}
+	
+	return 0; 
+}
+
+
+
