@@ -1,0 +1,85 @@
+9. STL sort()함수 다루기
+sort함수는 간단하게 정렬을 사용할 수 있도록 해준다.
+
+선택정렬, 버블, 삽입, 퀵 , 병합 정렬을 공부했다.
+
+정렬은 이미, 아주 훌륭한 라이브러리가 존재한다. 오랫동안 연구되었기 때문..!
+따라서, 정렬 문제를 만났을 때, 이 sort함수 라이브러리를 사용하면 된다.
+일일히 구현할 필요가 없다.
+그 문법에 대해 공부해보자.
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+bool compare(int a, int b){
+	return a > b; //정렬의 기준을 부여한다.
+	//기본적으로는 오름차순이다. 
+	
+} 
+
+int main(void) {
+	
+	int a[10] = {9,3,5,4,1,10,8,6,7,2};
+	
+	sort(a, a+10, compare); // 가장 마지막 원소인 a+10은 2를 가리킴.
+	// 9부터 2까지 정렬을 하는구나 라고 알 수 있음.
+	// 배열 변수명 넣고, 검사할 갯수 넣어줌.
+	
+	for( int i = 0; i < 10; i++ ){
+		
+		cout << a[i] << ' ';
+	} 
+	 
+} 
+
+------------------------
+
+실무에서는 데이터가 여러개로 묶여있다. 즉 객체로 정리가 되어있다.
+객체지향 프로그래밍 기법을 적용하기 때문이다. 가장 실무에 가까운 방식을 알아보자.
+
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+bool compare(int a, int b){
+	return a > b; //정렬의 기준을 부여한다.
+	//기본적으로는 오름차순이다. 
+	
+} 
+
+class Student {
+	public:
+		string name;
+		int score;
+		Student(string name, int score) {
+			this -> name = name;
+			this -> score = score;
+		}
+		//정렬기준은 점수가 작은 순서.
+		bool operator < (Student &student){
+			return this->score < student.score;
+		} 
+}; 
+
+int main(void) {
+	
+	Student students[] = {
+		Student("나 동 빈", 90),
+		Student("이 상 욱", 93),
+		Student("박 한 울", 97),
+		Student("강 종 구", 87),
+		Student("이 태 일", 92),
+		 
+	};
+	
+	sort(students, students + 5);
+	for(int i=0; i<5; i++) {
+		cout << students[i].name << ' ';
+	}
+	 
+} 
+
+
